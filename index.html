@@ -1,139 +1,71 @@
-
+html
+Copy code
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EMI Calculator</title>
+    <title>Return Calculator</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: #f0f2f5;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        .navbar {
+            background-color: #007bff;
+            padding: 10px 20px;
+            color: white;
+            text-align: center;
+            font-size: 20px;
+        }
+        .container {
+            flex: 1;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
-        .container {
-            background: #ffffff;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            max-width: 400px;
-            width: 100%;
             text-align: center;
         }
-        h1 {
-            color: #333;
-            margin-bottom: 20px;
-            font-size: 24px;
-            border-bottom: 2px solid #eee;
-            padding-bottom: 10px;
-        }
-        label {
-            display: block;
-            text-align: left;
-            margin-top: 10px;
-            font-weight: bold;
-            color: #555;
-        }
-        input[type="text"] {
-            width: calc(100% - 20px);
-            padding: 10px;
-            margin-top: 5px;
-            margin-bottom: 15px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            box-sizing: border-box;
-            outline: none;
-            transition: border-color 0.3s ease;
-        }
-        input[type="text"]:focus {
-            border-color: #007bff;
-        }
-        button {
-            width: 100%;
-            padding: 12px;
+        .button {
             background-color: #007bff;
             color: white;
+            padding: 15px 30px;
+            margin: 20px;
             border: none;
             border-radius: 5px;
-            font-size: 16px;
-            cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.2s ease;
-        }
-        button:hover {
-            background-color: #0056b3;
-            transform: scale(1.05);
-        }
-        .result, .error {
-            margin-top: 20px;
-            padding: 10px;
-            border-radius: 5px;
             font-size: 18px;
+            cursor: pointer;
+            transition: transform 0.3s ease, background-color 0.3s ease;
         }
-        .result {
-            background-color: #e7f5e6;
-            color: #2e7d32;
+        .button:hover {
+            background-color: #0056b3;
+            transform: scale(1.1);
         }
-        .error {
-            background-color: #f8d7da;
-            color: #d32f2f;
-        }
-        .result, .error {
-            display: none;
-        }
-        .container .error {
-            display: none;
+        footer {
+            background-color: #007bff;
+            color: white;
+            text-align: center;
+            padding: 10px 20px;
         }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <h1>EMI Calculator</h1>
-    <label for="loan_amt">Amount of loan taken</label>
-    <input type="text" id="loan_amt" placeholder="Enter loan amount">
-
-    <label for="ROI">Annual Rate of interest(%)</label>
-    <input type="text" id="ROI" placeholder="Enter interest rate">
-
-    <label for="NPER">In how many years you want to pay it back</label>
-    <input type="text" id="NPER" placeholder="Enter repayment period in years">
-
-    <button onclick="calculateEMI()">Calculate</button>
-
-    <div id="result" class="result"></div>
-    <div id="error" class="error"></div>
+<div class="navbar">
+    Return Calculator
 </div>
 
-<script>
-function calculateEMI() {
-    var loan_amt = parseFloat(document.getElementById('loan_amt').value);
-    var ROI = parseFloat(document.getElementById('ROI').value);
-    var NPER = parseInt(document.getElementById('NPER').value);
+<div class="container">
+    <button class="button" onclick="location.href='/emicalc.html'">Fixed Deposit</button>
+    <button class="button" onclick="location.href='/returncalc'">Recurring Deposit</button>
+</div>
 
-    var errorDiv = document.getElementById('error');
-    var resultDiv = document.getElementById('result');
-
-    errorDiv.style.display = 'none';
-    resultDiv.style.display = 'none';
-
-    if (isNaN(loan_amt) || isNaN(ROI) || isNaN(NPER) || loan_amt <= 0 || ROI <= 0 || NPER <= 0) {
-        errorDiv.style.display = 'block';
-        errorDiv.textContent = 'Please fill all values required with valid numbers';
-        return;
-    }
-
-    var monthlyROI = ((1 + (ROI / 100)) ** (1 / 12)) - 1;
-    var totalPayments = NPER * 12;
-    var emi = (loan_amt * monthlyROI * ((1 + monthlyROI) ** totalPayments)) / (((1 + monthlyROI) ** totalPayments) - 1);
-
-    resultDiv.style.display = 'block';
-    resultDiv.textContent = 'Monthly EMI is ' + emi.toFixed(2);
-}
-</script>
+<footer>
+    &copy; 2024 Return Calculator. All rights reserved.
+</footer>
 
 </body>
 </html>
