@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Return Calculator</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 24px;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #555;
+            margin: 20px 0;
+        }
+        label {
+            display: block;
+            text-align: left;
+            margin-top: 10px;
+            font-weight: bold;
+            color: #555;
+        }
+        input[type="number"], select {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-top: 5px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+        input[type="number"]:focus, select:focus {
+            border-color: #007bff;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+        button:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+        }
+        .result, .error {
+            margin-top: 20px;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 18px;
+        }
+        .result {
+            background-color: #e7f5e6;
+            color: #2e7d32;
+        }
+        .error {
+            background-color: #f8d7da;
+            color: #d32f2f;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Return Calculator</h1>
+    <button id="show-options-button" onclick="showOptions()">Type</button>
+    
+    <div id="options" style="display: none;">
+        <label for="investment-type">Choose your investment type:</label>
+        <select id="investment-type" onchange="showInvestmentForm()">
+            <option value="">Select an option</option>
+            <option value="fixed">Fixed Deposit</option>
+            <option value="recurring">Recurring Deposit</option>
+        </select>
+    </div>
+
+    <div id="fixed-deposit-form" style="display: none;">
+        <h2>Fixed Deposit</h2>
+        <label for="fd-prin">What amount you want to invest?</label>
+        <input type="number" id="fd-prin">
+        
+        <label for="fd-roi">Annual rate of interest(%)</label>
+        <input type="number" id="fd-roi">
+        
+        <label for="fd-nper">For how many years you want to invest?</label>
+        <input type="number" id="fd-nper">
+        
+        <button onclick="calculateFD()">Calculate</button>
+        <div id="fd-result" class="result"></div>
+        <div id="fd-error" class="error"></div>
+    </div>
+
+    <div id="recurring-deposit-form" style="display: none;">
+        <h2>Recurring Deposit</h2>
+        <label for="rd-prin">What amount you want to invest monthly?</label>
+        <input type="number" id="rd-prin">
+        
+        <label for="rd-roi">Annual rate of interest(%)</label>
+        <input type="number" id="rd-roi">
+        
+        <label for="rd-nper">For how many years you want to invest?</label>
+        <input type="number" id="rd-nper">
+        
+        <button onclick="calculateRD()">Calculate</button>
+        <div id="rd-result" class="result"></div>
+        <div id="rd-error" class="error"></div>
+    </div>
+</div>
+
+<script>
+let showOptions = () => {
+    document.getElementById('options').style.display = 'block';
+};
+
+let showInvestmentForm = () => {
+    let investmentType = document.getElementById('investment-type').value;
+    document.getElementById('fixed-deposit-form').style.display = 'none';
+    document.getElementById('recurring-deposit-form').style.display = 'none';
+    document.getElementById('fd-result').style.display = 'none';
+    document.getElementById('fd-error').style.display = 'none';
+    document.getElementById('rd-result').style.display = 'none';
+    document.getElementById('rd-error').style.display = 'none';
+    if (investmentType === 'fixed') {
+        document.getElementById('fixed-deposit-form').style.display = 'block';
+    } else if (investmentType === 'recurring') {
+        document.getElementById('recurring-deposit-form').style.display = 'block';
+    }
+};
+
+let calculateFD = () => {
+    let prin = parseFloat(document.getElementById('fd-prin').value);
+    let roi = parseFloat(document.getElementById('fd-roi').value);
+    let nper = parseFloat(document.getElementById('fd-nper').value);
+
+    let resultDiv = document.getElementById('fd-result');
+    let errorDiv = document.getElementById('fd-error');
+
+    resultDiv.style.display = 'none';
+    errorDiv.style.display = 'none';
+
+    if (isNaN(prin) || isNaN(roi) || isNaN(nper) || prin <= 0 || roi <= 0 || nper <= 0) {
+        errorDiv.style.display = 'block';
+        errorDiv.textContent = 'Please enter all values required with valid numbers';
+        return;
+    }
+
+    let fd_r = prin * ((1 + (roi / 100)) ** nper);
+    resultDiv.style.display = 'block';
+    resultDiv.textContent = 'Your amount will become: ' + fd_r.toFixed(2);
+};
+
+let calculateRD = () => {
+    let prin = parseFloat(document.getElementById('rd-prin').value);
+    let roi = parseFloat(document.getElementById('rd-roi').value);
+    let nper = parseFloat(document.getElementById('rd-nper').value);
+
+    let resultDiv = document.getElementById('rd-result');
+    let errorDiv = document.getElementById('rd-error');
+
+    resultDiv.style.display = 'none';
+    errorDiv.style.display = 'none';
+
+    if (isNaN(prin) || isNaN(roi) || isNaN(nper) || prin <= 0 || roi <= 0 || nper <= 0) {
+        errorDiv.style.display = 'block';
+        errorDiv.textContent = 'Please enter all values required with valid numbers';
+        return;
+    }
+
+    let monthlyROI = ((1 + (roi / 100)) ** (1 / 12)) - 1;
+    let totalPayments = nper * 12;
+    let rd_r = (prin * (1 + monthlyROI) * ((1 + monthlyROI) ** totalPayments - 1)) / monthlyROI;
+
+    resultDiv.style.display = 'block';
+    resultDiv.textContent = 'Your amount will become: ' + rd_r.toFixed(2);
+
+    let totalInvested = prin * totalPayments;
+    resultDiv.textContent += '\nTotal amount invested: ' + totalInvested.toFixed(2);
+};
+</script>
+
+</body>
+</html>
