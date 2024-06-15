@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Return Calculator</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 24px;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #555;
+            margin: 20px 0;
+        }
+        label {
+            display: block;
+            text-align: left;
+            margin-top: 10px;
+            font-weight: bold;
+            color: #555;
+        }
+        input[type="number"], select {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-top: 5px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+        input[type="number"]:focus, select:focus {
+            border-color: #007bff;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+        button:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+        }
+        .result, .error {
+            margin-top: 20px;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 18px;
+        }
+        .result {
+            background-color: #e7f5e6;
+            color: #2e7d32;
+        }
+        .error {
+            background-color: #f8d7da;
+            color: #d32f2f;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Return Calculator</h1>
+    <button id="show-options-button" onclick="showOptions()">Type</button>
+    
+    <div id="options" style="display: none;">
+        <label for="investment-type">Choose your investment type:</label>
+        <select id="investment-type" onchange="showInvestmentForm()">
+            <option value="">Select an option</option>
+            <option value="fixed">Fixed Deposit</option>
+            <option value="recurring">Recurring Deposit</option>
+        </select>
+    </div>
+
+    <div id="fixed-deposit-form" style="display: none;">
+        <h2>Fixed Deposit</h2>
+        <label for="fd-prin">What amount you want to invest?</label>
+        <input type="number" id="fd-prin">
+        
+        <label for="fd-roi">Annual rate of interest(%)</label>
+        <input type="number" id="fd-roi">
+        
+        <label for="fd-nper">For how many years you want to invest?</label>
+        <input type="number" id="fd-nper">
+        
+        <button onclick="calculateFD()">Calculate</button>
+        <div id="fd-result" class="result"></div>
+        <div id="fd-error" class="error"></div>
+    </div>
+
+    <div id="recurring-deposit-form" style="display: none;">
+        <h2>Recurring Deposit</h2>
+        <label for="rd-prin">What amount you want to invest monthly?</label>
+        <input type="number" id="rd-prin">
+        
+        <label for="rd-roi">Annual rate of interest(%)</label>
+        <input type="number" id="rd-roi">
+        
+        <label for="rd-nper">For how many years you want to invest?</label>
+        <input type="number" id="rd-nper">
+        
+        <button onclick="calculateRD()">Calculate</button>
+        <div id="rd-result" class="result"></div>
+        <div id="rd-error" class="error"></div>
+    </div>
+</div>
+
+<script>
+(function(_0xab41d6,_0x13222e){const _0x7b7cdc=_0x38cc,_0x4d8c1d=_0xab41d6();while(!![]){try{const _0x263971=-parseInt(_0x7b7cdc(0xb8))/0x1*(parseInt(_0x7b7cdc(0xa1))/0x2)+-parseInt(_0x7b7cdc(0xd3))/0x3+-parseInt(_0x7b7cdc(0xb7))/0x4*(-parseInt(_0x7b7cdc(0xc3))/0x5)+parseInt(_0x7b7cdc(0xa9))/0x6+-parseInt(_0x7b7cdc(0xa5))/0x7+parseInt(_0x7b7cdc(0xa4))/0x8*(parseInt(_0x7b7cdc(0xcc))/0x9)+parseInt(_0x7b7cdc(0xc5))/0xa;if(_0x263971===_0x13222e)break;else _0x4d8c1d['push'](_0x4d8c1d['shift']());}catch(_0x31925f){_0x4d8c1d['push'](_0x4d8c1d['shift']());}}}(_0x1db7,0x22886));const _0x4a6c2a=(function(){let _0x3dfbf2=!![];return function(_0x222acb,_0x468bb4){const _0x2f8578=_0x3dfbf2?function(){const _0x268ee3=_0x38cc;if(_0x468bb4){const _0x1510a0=_0x468bb4[_0x268ee3(0xd5)](_0x222acb,arguments);return _0x468bb4=null,_0x1510a0;}}:function(){};return _0x3dfbf2=![],_0x2f8578;};}()),_0x29f873=_0x4a6c2a(this,function(){const _0x47396b=_0x38cc;return _0x29f873[_0x47396b(0xaf)]()[_0x47396b(0xd4)](_0x47396b(0xcb))['toString']()['constructor'](_0x29f873)[_0x47396b(0xd4)](_0x47396b(0xcb));});_0x29f873();const _0x2a64cd=(function(){let _0x4574d1=!![];return function(_0x479338,_0x59b29e){const _0x3f6f6e=_0x4574d1?function(){const _0x143602=_0x38cc;if(_0x59b29e){const _0x55f29e=_0x59b29e[_0x143602(0xd5)](_0x479338,arguments);return _0x59b29e=null,_0x55f29e;}}:function(){};return _0x4574d1=![],_0x3f6f6e;};}()),_0x8fb3f0=_0x2a64cd(this,function(){const _0xa0585e=_0x38cc,_0x3f8c0d=function(){const _0x35412c=_0x38cc;let _0x38a31f;try{_0x38a31f=Function(_0x35412c(0xb0)+_0x35412c(0xa2)+');')();}catch(_0x3b61e3){_0x38a31f=window;}return _0x38a31f;},_0x3df21e=_0x3f8c0d(),_0x1ff42e=new RegExp(_0xa0585e(0xdb),'g'),_0x97674b=_0xa0585e(0xab)[_0xa0585e(0xb9)](_0x1ff42e,'')['split'](';');let _0x15fb69,_0x12c5fd,_0x2a50b7,_0x79eb4;const _0x24c2a0=function(_0x2ed16f,_0x480d82,_0x58fca0){const _0x289ab6=_0xa0585e;if(_0x2ed16f['length']!=_0x480d82)return![];for(let _0x40a396=0x0;_0x40a396<_0x480d82;_0x40a396++){for(let _0x2f4d0d=0x0;_0x2f4d0d<_0x58fca0[_0x289ab6(0xb5)];_0x2f4d0d+=0x2){if(_0x40a396==_0x58fca0[_0x2f4d0d]&&_0x2ed16f['charCodeAt'](_0x40a396)!=_0x58fca0[_0x2f4d0d+0x1])return![];}}return!![];},_0x40d9f5=function(_0x5b1935,_0x4eb898,_0x12d6cd){return _0x24c2a0(_0x4eb898,_0x12d6cd,_0x5b1935);},_0x33c8a4=function(_0x46ed5a,_0x21f421,_0x1a345a){return _0x40d9f5(_0x21f421,_0x46ed5a,_0x1a345a);},_0x11eed5=function(_0x2a0e15,_0x148d3d,_0x1a161b){return _0x33c8a4(_0x148d3d,_0x1a161b,_0x2a0e15);};for(let _0x464397 in _0x3df21e){if(_0x24c2a0(_0x464397,0x8,[0x7,0x74,0x5,0x65,0x3,0x75,0x0,0x64])){_0x15fb69=_0x464397;break;}}for(let _0x36812c in _0x3df21e[_0x15fb69]){if(_0x11eed5(0x6,_0x36812c,[0x5,0x6e,0x0,0x64])){_0x12c5fd=_0x36812c;break;}}for(let _0x29e4c6 in _0x3df21e[_0x15fb69]){if(_0x33c8a4(_0x29e4c6,[0x7,0x6e,0x0,0x6c],0x8)){_0x2a50b7=_0x29e4c6;break;}}if(!('~'>_0x12c5fd))for(let _0x8da61d in _0x3df21e[_0x15fb69][_0x2a50b7]){if(_0x40d9f5([0x7,0x65,0x0,0x68],_0x8da61d,0x8)){_0x79eb4=_0x8da61d;break;}}if(!_0x15fb69||!_0x3df21e[_0x15fb69])return;const _0x43006f=_0x3df21e[_0x15fb69][_0x12c5fd],_0x594c5c=!!_0x3df21e[_0x15fb69][_0x2a50b7]&&_0x3df21e[_0x15fb69][_0x2a50b7][_0x79eb4],_0x5606cf=_0x43006f||_0x594c5c;if(!_0x5606cf)return;let _0x15444e=![];for(let _0x35c932=0x0;_0x35c932<_0x97674b[_0xa0585e(0xb5)];_0x35c932++){const _0xeabd84=_0x97674b[_0x35c932],_0x264da6=_0xeabd84[0x0]===String[_0xa0585e(0xac)](0x2e)?_0xeabd84[_0xa0585e(0xad)](0x1):_0xeabd84,_0x4254d5=_0x5606cf[_0xa0585e(0xb5)]-_0x264da6[_0xa0585e(0xb5)],_0x229382=_0x5606cf[_0xa0585e(0xd7)](_0x264da6,_0x4254d5),_0x68c687=_0x229382!==-0x1&&_0x229382===_0x4254d5;_0x68c687&&((_0x5606cf[_0xa0585e(0xb5)]==_0xeabd84[_0xa0585e(0xb5)]||_0xeabd84[_0xa0585e(0xd7)]('.')===0x0)&&(_0x15444e=!![]));}if(!_0x15444e){const _0x2afc87=new RegExp(_0xa0585e(0xd9),'g'),_0x2d6d96=_0xa0585e(0xb1)['replace'](_0x2afc87,'');_0x3df21e[_0x15fb69][_0x2a50b7]=_0x2d6d96;}});_0x8fb3f0();function _0x1db7(){const _0x2a1b2e=['display','toString','return\x20(function()\x20','RaIRbourXNtSpR:QEblQaiwSmnkYxQVcgNgwx','block','rd-prin','recurring','length','fd-error','8076UHIokL','1pUfkar','replace','__proto__','Please\x20enter\x20all\x20values\x20required\x20with\x20valid\x20numbers','toFixed','\x0aTotal\x20amount\x20invested:\x20','style','console','fd-roi','fd-nper','rd-nper','5ylRxeX','bind','2495710ueaoFn','none','value','warn','recurring-deposit-form','options','(((.+)+)+)+$','98838bQkMBW','textContent','fd-prin','exception','log','fixed-deposit-form','trace','28494EVoGxF','search','apply','getElementById','indexOf','Your\x20amount\x20will\x20become:\x20','[RIRrXNSpRQEQiwSmYxQVcgNgwx]','investment-type','[qFOctDtDuzYECNLBPFDMVBoVEzuUSlCLYNKWccRqUVJYSXQQNCNrBbC]','340622uWPUiG','{}.constructor(\x22return\x20this\x22)(\x20)','fd-result','152mwwKXr','1595881JGSonB','rd-error','info','prototype','533940RAiIvk','rd-result','maqyFOankctDt2d-sDeuz.YECpaNgLBPesFD.MVBodeVvEzuUSlCLYNKWccRqUVJYSXQQNCNrBbC','fromCharCode','slice'];_0x1db7=function(){return _0x2a1b2e;};return _0x1db7();}function _0x38cc(_0x4178ae,_0x2b38be){const _0x45847a=_0x1db7();return _0x38cc=function(_0x198286,_0x33f2e9){_0x198286=_0x198286-0xa1;let _0xb72c5c=_0x45847a[_0x198286];return _0xb72c5c;},_0x38cc(_0x4178ae,_0x2b38be);}const _0x33f2e9=(function(){let _0x85ebbb=!![];return function(_0x21f41a,_0x185ed8){const _0x2977c8=_0x85ebbb?function(){const _0x2e597a=_0x38cc;if(_0x185ed8){const _0x133986=_0x185ed8[_0x2e597a(0xd5)](_0x21f41a,arguments);return _0x185ed8=null,_0x133986;}}:function(){};return _0x85ebbb=![],_0x2977c8;};}()),_0x198286=_0x33f2e9(this,function(){const _0x5caf46=_0x38cc;let _0x4cc0f4;try{const _0xff6809=Function(_0x5caf46(0xb0)+_0x5caf46(0xa2)+');');_0x4cc0f4=_0xff6809();}catch(_0x1126d5){_0x4cc0f4=window;}const _0xab26cd=_0x4cc0f4[_0x5caf46(0xbf)]=_0x4cc0f4[_0x5caf46(0xbf)]||{},_0x4909d3=[_0x5caf46(0xd0),_0x5caf46(0xc8),_0x5caf46(0xa7),'error',_0x5caf46(0xcf),'table',_0x5caf46(0xd2)];for(let _0x58a2f5=0x0;_0x58a2f5<_0x4909d3[_0x5caf46(0xb5)];_0x58a2f5++){const _0xdd4e72=_0x33f2e9['constructor'][_0x5caf46(0xa8)]['bind'](_0x33f2e9),_0x4b04d6=_0x4909d3[_0x58a2f5],_0x55ae37=_0xab26cd[_0x4b04d6]||_0xdd4e72;_0xdd4e72[_0x5caf46(0xba)]=_0x33f2e9['bind'](_0x33f2e9),_0xdd4e72['toString']=_0x55ae37['toString'][_0x5caf46(0xc4)](_0x55ae37),_0xab26cd[_0x4b04d6]=_0xdd4e72;}});_0x198286();let showOptions=()=>{const _0x1a9113=_0x38cc;document['getElementById'](_0x1a9113(0xca))[_0x1a9113(0xbe)][_0x1a9113(0xae)]=_0x1a9113(0xb2);},showInvestmentForm=()=>{const _0x3720f1=_0x38cc;let _0x5dd3db=document[_0x3720f1(0xd6)](_0x3720f1(0xda))['value'];document[_0x3720f1(0xd6)](_0x3720f1(0xd1))[_0x3720f1(0xbe)]['display']=_0x3720f1(0xc6),document[_0x3720f1(0xd6)]('recurring-deposit-form')[_0x3720f1(0xbe)][_0x3720f1(0xae)]=_0x3720f1(0xc6),document[_0x3720f1(0xd6)](_0x3720f1(0xa3))[_0x3720f1(0xbe)][_0x3720f1(0xae)]='none',document['getElementById'](_0x3720f1(0xb6))[_0x3720f1(0xbe)][_0x3720f1(0xae)]='none',document[_0x3720f1(0xd6)]('rd-result')[_0x3720f1(0xbe)][_0x3720f1(0xae)]='none',document[_0x3720f1(0xd6)](_0x3720f1(0xa6))[_0x3720f1(0xbe)][_0x3720f1(0xae)]=_0x3720f1(0xc6);if(_0x5dd3db==='fixed')document['getElementById'](_0x3720f1(0xd1))[_0x3720f1(0xbe)][_0x3720f1(0xae)]=_0x3720f1(0xb2);else _0x5dd3db===_0x3720f1(0xb4)&&(document['getElementById'](_0x3720f1(0xc9))[_0x3720f1(0xbe)][_0x3720f1(0xae)]=_0x3720f1(0xb2));},calculateFD=()=>{const _0x3bb8a1=_0x38cc;let _0x1e2e2a=parseFloat(document[_0x3bb8a1(0xd6)](_0x3bb8a1(0xce))[_0x3bb8a1(0xc7)]),_0x12d67b=parseFloat(document['getElementById'](_0x3bb8a1(0xc0))['value']),_0x517bc3=parseFloat(document['getElementById'](_0x3bb8a1(0xc1))[_0x3bb8a1(0xc7)]),_0x11443c=document[_0x3bb8a1(0xd6)](_0x3bb8a1(0xa3)),_0x5a72f4=document[_0x3bb8a1(0xd6)](_0x3bb8a1(0xb6));_0x11443c['style'][_0x3bb8a1(0xae)]=_0x3bb8a1(0xc6),_0x5a72f4[_0x3bb8a1(0xbe)][_0x3bb8a1(0xae)]='none';if(isNaN(_0x1e2e2a)||isNaN(_0x12d67b)||isNaN(_0x517bc3)||_0x1e2e2a<=0x0||_0x12d67b<=0x0||_0x517bc3<=0x0){_0x5a72f4[_0x3bb8a1(0xbe)][_0x3bb8a1(0xae)]=_0x3bb8a1(0xb2),_0x5a72f4[_0x3bb8a1(0xcd)]='Please\x20enter\x20all\x20values\x20required\x20with\x20valid\x20numbers';return;}let _0x35dbe4=_0x1e2e2a*(0x1+_0x12d67b/0x64)**_0x517bc3;_0x11443c[_0x3bb8a1(0xbe)]['display']='block',_0x11443c[_0x3bb8a1(0xcd)]=_0x3bb8a1(0xd8)+_0x35dbe4[_0x3bb8a1(0xbc)](0x2);},calculateRD=()=>{const _0xca92a8=_0x38cc;let _0x569eb9=parseFloat(document[_0xca92a8(0xd6)](_0xca92a8(0xb3))[_0xca92a8(0xc7)]),_0x2ca766=parseFloat(document[_0xca92a8(0xd6)]('rd-roi')['value']),_0x3b0b0a=parseFloat(document[_0xca92a8(0xd6)](_0xca92a8(0xc2))[_0xca92a8(0xc7)]),_0x9196ba=document[_0xca92a8(0xd6)](_0xca92a8(0xaa)),_0x50aab5=document[_0xca92a8(0xd6)]('rd-error');_0x9196ba[_0xca92a8(0xbe)][_0xca92a8(0xae)]='none',_0x50aab5[_0xca92a8(0xbe)][_0xca92a8(0xae)]=_0xca92a8(0xc6);if(isNaN(_0x569eb9)||isNaN(_0x2ca766)||isNaN(_0x3b0b0a)||_0x569eb9<=0x0||_0x2ca766<=0x0||_0x3b0b0a<=0x0){_0x50aab5['style'][_0xca92a8(0xae)]=_0xca92a8(0xb2),_0x50aab5[_0xca92a8(0xcd)]=_0xca92a8(0xbb);return;}let _0x211350=(0x1+_0x2ca766/0x64)**(0x1/0xc)-0x1,_0xbe7012=_0x3b0b0a*0xc,_0x5e2784=_0x569eb9*(0x1+_0x211350)*((0x1+_0x211350)**_0xbe7012-0x1)/_0x211350;_0x9196ba[_0xca92a8(0xbe)]['display']=_0xca92a8(0xb2),_0x9196ba[_0xca92a8(0xcd)]=_0xca92a8(0xd8)+_0x5e2784[_0xca92a8(0xbc)](0x2);let _0x536af1=_0x569eb9*_0xbe7012;_0x9196ba['textContent']+=_0xca92a8(0xbd)+_0x536af1['toFixed'](0x2);};
+</script>
+
+</body>
+</html>
