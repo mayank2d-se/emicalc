@@ -80,10 +80,22 @@
             background-color: #e7f5e6;
             color: #2e7d32;
         }
+          .small-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+        }
+        .small-buttons button {
+            background-color: black;
+            width: 48%;
+            padding: 6px;
+            font-size: 14px;
+        }
         .error {
             background-color: #f8d7da;
             color: #d32f2f;
         }
+        
     </style>
 </head>
 <body>
@@ -91,6 +103,18 @@
 <div class="container">
     <h1>Return Calculator</h1>
     <button id="show-options-button" onclick="showOptions()">Type</button>
+    
+     
+    <div class="small-buttons">
+        
+           
+
+         <button onclick="window.location.href='index.html'">Home</button>       
+        <button onclick="window.location.href='emicalc.html'">EMI Calculator</button>
+
+    </div>
+    
+    
     
     <div id="options" style="display: none;">
         <label for="investment-type">Choose your investment type:</label>
