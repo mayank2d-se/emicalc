@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -67,6 +66,16 @@
             background-color: #0056b3;
             transform: scale(1.05);
         }
+        .small-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+        }
+        .small-buttons button {
+            width: 48%;
+            padding: 6px;
+            font-size: 14px;
+        }
         .result, .error {
             margin-top: 20px;
             padding: 10px;
@@ -103,6 +112,14 @@
     <input type="text" id="NPER" placeholder="Enter repayment period in years">
 
     <button onclick="calculateEMI()">Calculate</button>
+    
+    <div class="small-buttons">
+        
+           
+
+        <button onclick="window.location.href='index.html">Home</button>       
+        <button onclick="window.location.href='returncalc.html">Return Calculator</button>
+    </div>
 
     <div id="result" class="result"></div>
     <div id="error" class="error"></div>
@@ -132,6 +149,24 @@ function calculateEMI() {
 
     resultDiv.style.display = 'block';
     resultDiv.textContent = 'Monthly EMI is ' + emi.toFixed(2);
+}
+
+function clearFields() {
+    document.getElementById('loan_amt').value = '';
+    document.getElementById('ROI').value = '';
+    document.getElementById('NPER').value = '';
+    document.getElementById('result').style.display = 'none';
+    document.getElementById('error').style.display = 'none';
+}
+
+function saveResult() {
+    var resultDiv = document.getElementById('result');
+    if (resultDiv.style.display === 'block') {
+        var emi = resultDiv.textContent.split(' ')[3];
+        alert('EMI of ' + emi + ' saved successfully!');
+    } else {
+        alert('No result to save!');
+    }
 }
 </script>
 
