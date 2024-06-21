@@ -225,7 +225,7 @@ let calculateRD = () => {
     resultDiv.textContent = 'Your amount will become: ' + rd_r.toFixed(2);
 
     let totalInvested = prin * totalPayments;
-    resultDiv.textContent += '\nTotal amount invested: ' + totalInvested.toFixed(2);
+    resultDiv.innerHTML += '<br>Total amount invested: ' + totalInvested.toFixed(2);
 };
 </script>
 
